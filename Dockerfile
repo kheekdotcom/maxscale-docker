@@ -1,6 +1,6 @@
 FROM mariadb/maxscale:2.4.7
 
-COPY maxscale.cnf /etc/maxscale.cnf.d/02-maxscale.cnf
+COPY maxscale.cnf /etc/maxscale.cnf
 
 EXPOSE 6603 3306 3307 8003
 
