@@ -7,7 +7,7 @@ auth_read_timeout=10
 
 [ReadWriteSplit-Service]
 localhost_match_wildcard_host=1
-passwd=$SERVICE_PWD
+password=$SERVICE_PWD
 router=readwritesplit
 servers=db1,db2,db3
 type=service
@@ -22,7 +22,7 @@ type=listener
 
 [MasterOnly-Service]
 localhost_match_wildcard_host=1
-passwd=$SERVICE_PWD
+password=$SERVICE_PWD
 router_options=master
 router=readconnroute
 servers=db1,db2,db3
@@ -38,7 +38,7 @@ type=listener
 
 [Galera-Monitor]
 module=galeramon
-passwd=$MONITOR_PWD
+password=$MONITOR_PWD
 servers=db1,db2,db3
 type=monitor
 use_priority=true
@@ -49,23 +49,13 @@ disable_master_failback=false
 type=service
 router=maxinfo
 user=monitor
-passwd=$SERVICE_PWD
+password=$SERVICE_PWD
 
 [MaxInfo-JSON-Listener]
 type=listener
 service=MaxInfo
 protocol=HTTPD
 port=8003
-
-[CLI]
-type=service
-router=cli
-
-[CLI-Listener]
-type=listener
-service=CLI
-protocol=maxscaled
-socket=default
 
 [db1]
 type=server
@@ -87,3 +77,15 @@ address=$DB3_ADDRESS
 port=$DB3_PORT
 protocol=MariaDBBackend
 priority=$DB3_PRIO
+
+# MaxAdmin Service
+[MaxAdmin Service]
+type=service
+router=cli
+
+# MaxAdmin listener
+[MaxAdmin Listener]
+type=listener
+service=MaxAdmin Service
+protocol=maxscaled
+socket=default
