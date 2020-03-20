@@ -1,22 +1,6 @@
-FROM docker.io/library/centos:7@sha256:285bc3161133ec01d8ca8680cd746eecbfdbc1faa6313bd863151c4b26d7e5a5
+FROM mariadb/maxscale:2.4.7
 
-ENV MAXSCALE_VERSION=2.4.7
-
-COPY entrypoint.sh /entrypoint.sh
-
-RUN yum install -y https://downloads.mariadb.com/MaxScale/${MAXSCALE_VERSION}/centos/7/x86_64/maxscale-${MAXSCALE_VERSION}-1.centos.7.x86_64.rpm && \
-    yum clean all -y && \
-    chmod g=u /etc/passwd && \
-    chmod +x entrypoint.sh && \
-    chmod -R g=u /var/{lib,run}/maxscale && \
-    chgrp -R 0 /var/{lib,run}/maxscale
-
-COPY maxscale.cnf /etc/maxscale.cnf
-
-USER 1001
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["maxscale", "--nodaemon", "--log=stdout"]
+COPY maxscale.cnf /etc/maxscale.cnf.d/02-maxscale.cnf
 
 EXPOSE 6603 3306 3307 8003
 
