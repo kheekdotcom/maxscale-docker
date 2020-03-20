@@ -78,14 +78,19 @@ port=$DB3_PORT
 protocol=MariaDBBackend
 priority=$DB3_PRIO
 
-# MaxAdmin Service
-[MaxAdmin Service]
+[MaxAdmin]
 type=service
 router=cli
 
-# MaxAdmin listener
-[MaxAdmin Listener]
+[MaxAdmin-Unix-Listener]
 type=listener
-service=MaxAdmin Service
+service=MaxAdmin
 protocol=maxscaled
 socket=default
+
+[MaxAdmin-Inet-Listener]
+type=listener
+service=MaxAdmin
+protocol=maxscaled
+address=localhost
+port=6603
